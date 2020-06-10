@@ -133,6 +133,7 @@ public class ProductDao implements IDAO<Product> {
         }
 
     }
+
     @Override
     public void save(Product product) {
         int product_code = product.getProductCode();
@@ -189,6 +190,7 @@ public class ProductDao implements IDAO<Product> {
             throwables.printStackTrace();
         }
     }
+
     public void deleteByProductLine(String productLine){
         String sql1 = "DELETE FROM productlines WHERE productline = ?";
         String sql = "DELETE FROM products WHERE productline = ?";
@@ -230,8 +232,6 @@ public class ProductDao implements IDAO<Product> {
     }
 
     @Override
-
-
     public Product findById(int id) {
         Product product = null;
         String sql = "SELECT * FROM products WHERE productcode = ?";
