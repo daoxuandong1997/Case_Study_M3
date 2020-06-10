@@ -1,4 +1,110 @@
 package model;
 
-public class ProductDao {
+import utils.DBConnection;
+
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
+
+public class ProductDao implements IDAO<Product> {
+    private DBConnection connection;
+
+    public ProductDao(DBConnection connection) {
+        this.connection = connection;
+    }
+
+    @Override
+    public List<Product> getAllList() {
+
+        List<Product> products = new ArrayList<>();
+        String sql = "SELECT * FROM products";
+
+        try{
+            Statement statement = this.connection.getConnection().createStatement();
+            ResultSet rs = statement.executeQuery(sql);
+
+            while (rs.next()){
+                int product_code = rs.getInt("productcode");
+                String product_line = rs.getString("productline");
+                String product_name = rs.getString("productname");
+                String product_vendor = rs.getString("productvendor");
+                int product_quantity = rs.getInt("productquantity");
+                float product_price = rs.getFloat("productprice");
+
+                Product product = new Product(product_code,product_name,product_price,product_quantity,product_line,product_vendor);
+                products.add(product);
+
+            }
+
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return products;
+    }
+
+    @Override
+    public void save(Product product) {
+        int product_code = product.getProductCode();
+        String product_line = product.getProductLine();
+        String product_name = product.getProductName();
+        String product_vendor = product.getProductVendor();
+        int product_quantity = product.getQuantity();
+        float product_price = product.getPrice();
+        String description = product.getDescription();
+        String image = product.getImage();
+
+        String sql1 = "INSERT INTO productlines (productline, description,image) values(?,?,?)";
+        String sql = "INSERT INTO products (productcode,productline,productname,productvendor,productquantity,productprice) VALUES (?,?,?,?,?,?)";
+
+        try{
+            PreparedStatement ps1 = this.connection.getConnection().prepareStatement(sql1);
+            ps1.setString(1,product_line);
+            ps1.setString(2,description);
+            ps1.setString(3,image);
+            ps1.execute();
+
+            PreparedStatement ps = this.connection.getConnection().prepareStatement(sql);
+            ps.setInt(1,product_code);
+            ps.setInt(2,product_code);
+            ps.setString(3,product_name);
+            ps.setString(4,product_vendor);
+            ps.setInt(5,product_quantity);
+            ps.setFloat(6,product_price);
+            ps.execute();
+
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+    }
+
+    @Override
+    public void deleteByid(int id) {
+        String sql = "DELETE FROM products WHERE productcode = ?";
+        try{
+            PreparedStatement ps = this.connection.getConnection().prepareStatement(sql);
+            ps.setInt(1,id);
+            ps.execute();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+    }
+
+    @Override
+    public void update(int id, Product product) {
+        String sql = "UPDATE products SET productcode = ?, productname = ?, productline = ?, productprice = ?, productvendor = ?, productquantity = ? WHERE productcode = ?";
+        try{
+            PreparedStatement ps = this.connection.getConnection().prepareStatement(sql);
+
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+    }
+
+    @Override
+    public Product findById(int id) {
+        return null;
+    }
 }

@@ -1,0 +1,18 @@
+<component name="ArtifactManager">
+  <artifact type="exploded-war" name="homestay_manager:war exploded">
+    <output-path>$PROJECT_DIR$/out/artifacts/homestay_manager_war_exploded</output-path>
+    <root id="root">
+      <element id="javaee-facet-resources" facet="homestay_manager/web/Web" />
+      <element id="directory" name="WEB-INF">
+        <element id="directory" name="classes">
+          <element id="module-output" name="homestay_manager" />
+          <element id="library" level="project" name="apache-tomcat-9.0" />
+        </element>
+        <element id="directory" name="lib">
+          <element id="library" level="project" name="mysql-connector-java-8.0" />
+          <element id="library" level="project" name="taglibs-standard-impl-1.2.5" />
+        </element>
+      </element>
+    </root>
+  </artifact>
+</component>
