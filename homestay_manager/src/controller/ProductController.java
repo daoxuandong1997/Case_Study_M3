@@ -49,6 +49,16 @@ public class ProductController extends HttpServlet {
         }
     }
 
+    private void deleteProductById(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        int id = Integer.parseInt(request.getParameter("id"));
+        try {
+            this.productDao.deleteByid(id);
+            getList(request,response);
+        }catch (Exception e) {
+            response.getWriter().write("Loi khi xoa san pham co id la: " + id);
+        }
+    }
+
     private void createProductLine(HttpServletRequest request, HttpServletResponse response) {
         String product_line = request.getParameter("line");
         String description = request.getParameter("description");
@@ -176,6 +186,12 @@ public class ProductController extends HttpServlet {
             case"lines":
                 showProductLine(request,response);
                 break;
+            case "delete":
+                deleteProductById(request,response);
+                break;
+            case "showLines":
+                showAllProductLines(request,response);
+                break;
             default:
                 getList(request,response);
                 break;
@@ -237,5 +253,18 @@ public class ProductController extends HttpServlet {
         }
     }
 
+    private void showAllProductLines(HttpServletRequest request, HttpServletResponse response){
+        List<ProductLine> productLines = this.productDao.getAllListLine();
+        request.setAttribute("listLine",productLines);
+        RequestDispatcher dispatcher = request.getRequestDispatcher("Products/ShowAllProductLines.jsp");
+
+        try{
+            dispatcher.forward(request,response);
+        } catch (ServletException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
 }

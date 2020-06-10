@@ -21,6 +21,9 @@
 <p>
     <a href="/products?command=create">Create a new product</a>
 </p>
+<p>
+    <a href="/products?command=showLines">Show productlines</a>
+</p>
 <table border="1px">
     <tr>
         <th>ID</th>
@@ -41,6 +44,7 @@
             <td><a href="/products?command=lines&productline=${product.getProductLine()}">${product.getProductLine()}</a></td>
             <td>${product.getQuantity()}</td>
             <td><a href="/products?command=edit&id=${product.getProductCode()}"><button>Edit</button></a></td>
+            <td><a href="/products?command=delete&id=${product.getProductCode()}"><button>Delete</button></a></td>
         </tr>
     </c:forEach>
 
