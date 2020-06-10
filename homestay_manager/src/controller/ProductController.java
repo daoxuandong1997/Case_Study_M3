@@ -43,10 +43,34 @@ public class ProductController extends HttpServlet {
             case "create_line":
                 createProductLine(request,response);
                 break;
+            case "editLine":
+                updateProductLine(request,response);
+                break;
             default:
                 getList(request,response);
                 break;
         }
+    }
+
+    private void updateProductLine(HttpServletRequest request, HttpServletResponse response) {
+        String product_line = request.getParameter("productline");
+        String description = request.getParameter("description");
+        String image = request.getParameter("image");
+
+        ProductLine productLine = new ProductLine(product_line,description,image);
+
+        this.productDao.updateProductLine(productLine);
+        RequestDispatcher dispatcher = request.getRequestDispatcher("Products/edit_product_line.jsp");
+        request.setAttribute("mess","Productline was updated");
+
+        try{
+            dispatcher.forward(request,response);
+        } catch (ServletException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
     }
 
     private void deleteProductById(HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -192,11 +216,47 @@ public class ProductController extends HttpServlet {
             case "showLines":
                 showAllProductLines(request,response);
                 break;
+            case "editLine":
+                showEditProductLine(request,response);
+                break;
+            case "deleteLine":
+                deleteProductLine(request,response);
+                break;
             default:
                 getList(request,response);
                 break;
         }
         response.setContentType("text/html;charset=UTF-8");
+
+    }
+
+    private void deleteProductLine(HttpServletRequest request, HttpServletResponse response) {
+        String productLine = request.getParameter("productline");
+        try{
+            this.productDao.deleteByProductLine(productLine);
+            showAllProductLines(request,response);
+        }catch (Exception e){
+            e.getStackTrace();
+        }
+    }
+
+    private void showEditProductLine(HttpServletRequest request, HttpServletResponse response) {
+        String product_line = request.getParameter("productline");
+        ProductLine productLine = this.productDao.findByProductLine(product_line);
+        RequestDispatcher dispatcher;
+        if (productLine == null){
+            dispatcher = request.getRequestDispatcher("error-404.jsp");
+        }else {
+            request.setAttribute("productline",productLine);
+            dispatcher = request.getRequestDispatcher("Products/edit_product_line.jsp");
+        }
+        try {
+            dispatcher.forward(request,response);
+        } catch (ServletException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
     }
 

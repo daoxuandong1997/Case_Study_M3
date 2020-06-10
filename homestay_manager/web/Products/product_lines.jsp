@@ -31,7 +31,7 @@
             <td>${productLine.getImage()}</td>
 <%--            <td><a href="/products?command=edit}"><button>Edit</button></a></td>--%>
         </tr>
-
+    <h3><a href="/products">Back to product</a></h3>
 </table>
 </body>
 </html>

@@ -19,7 +19,7 @@
 <body>
 <h1>Products</h1>
 <p>
-    <a href="/products?command=create_line">Create a new product line</a>
+    <a href="/products?command=create_lines">Create a new product line</a>
 </p>
 <table border="1px">
     <tr>
@@ -32,11 +32,11 @@
             <td><c:out value="${productLines.getProductLine()}"/></td>
             <td><c:out value= "${productLines.getDescription()}"/></td>
             <td><c:out value="${productLines.getImage()}"/></td>
-            <td><a href="/products?command=edit&productline=${productline.getProductLine()}"><button>Edit</button></a></td>
-            <td><a href="/products?command=delete&productline=${productline.getProductLine()}"><button>Delete</button></a></td>
+            <td><a href="/products?command=editLine&productline=${productLines.getProductLine()}"><button>Edit</button></a></td>
+            <td><a href="/products?command=deleteLine&productline=${productLines.getProductLine()}"><button>Delete</button></a></td>
         </tr>
     </c:forEach>
-
 </table>
+<h3><a href="/products">Back to product</a></h3>
 </body>
 </html>

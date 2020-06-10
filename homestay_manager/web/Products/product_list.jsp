@@ -47,7 +47,6 @@
             <td><a href="/products?command=delete&id=${product.getProductCode()}"><button>Delete</button></a></td>
         </tr>
     </c:forEach>
-
 </table>
 </body>
 </html>

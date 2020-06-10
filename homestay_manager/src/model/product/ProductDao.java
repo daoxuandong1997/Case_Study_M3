@@ -114,6 +114,25 @@ public class ProductDao implements IDAO<Product> {
         }
         return productLines;
     }
+
+    public void updateProductLine(ProductLine productLine){
+        String product_line = productLine.getProductLine();
+        String description = productLine.getDescription();
+        String image = productLine.getImage();
+
+        String sql = "UPDATE productlines SET productline = ?, description = ?, image = ? WHERE productline = ?";
+        try{
+            PreparedStatement ps = this.connection.getConnection().prepareStatement(sql);
+            ps.setString(1,product_line);
+            ps.setString(2,description);
+            ps.setString(3,image);
+            ps.setString(4,product_line);
+            ps.execute();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+
+    }
     @Override
     public void save(Product product) {
         int product_code = product.getProductCode();
@@ -165,6 +184,20 @@ public class ProductDao implements IDAO<Product> {
         try{
             PreparedStatement ps = this.connection.getConnection().prepareStatement(sql);
             ps.setInt(1,id);
+            ps.execute();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+    }
+    public void deleteByProductLine(String productLine){
+        String sql1 = "DELETE FROM productlines WHERE productline = ?";
+        String sql = "DELETE FROM products WHERE productline = ?";
+        try{
+            PreparedStatement ps = this.connection.getConnection().prepareStatement(sql);
+            ps.setString(1,productLine);
+            ps.execute();
+            ps = this.connection.getConnection().prepareStatement(sql1);
+            ps.setString(1,productLine);
             ps.execute();
         } catch (SQLException throwables) {
             throwables.printStackTrace();
@@ -223,5 +256,29 @@ public class ProductDao implements IDAO<Product> {
             throwables.printStackTrace();
         }
         return product;
+    }
+
+    public ProductLine findByProductLine(String product_line){
+        ProductLine productLine = null;
+        String sql = "SELECT * FROM productlines WHERE productline = ?";
+        try{
+            PreparedStatement ps = this.connection.getConnection().prepareStatement(sql);
+            ps.setString(1,product_line);
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()){
+                String _productLine = rs.getString("productline");
+                String description = rs.getString("description");
+                String image = rs.getString("image");
+
+                productLine = new ProductLine(_productLine,description,image);
+
+            }
+
+
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return productLine;
     }
 }

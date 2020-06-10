@@ -25,7 +25,7 @@
     <table>
         <tr>
             <th>ID</th>
-            <td><input type="number" name="productcode" placeholder="Set Code"></td>
+            <td><input type="number" name="productcode" placeholder="Set Code" ></td>
         </tr>
         <tr>
             <th>Name</th>

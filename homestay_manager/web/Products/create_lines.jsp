@@ -18,15 +18,15 @@
     <table>
         <tr>
             <th>Product line</th>
-            <td><input type="text" name="line" placeholder="Set ID"></td>
+            <td><input type="text" name="line" placeholder="Set product line"></td>
         </tr>
         <tr>
             <th>Desciption</th>
-            <td><input type="text" name="description" placeholder="Set Name"></td>
+            <td><input type="text" name="description" placeholder="Set description"></td>
         </tr>
         <tr>
             <th>image</th>
-            <td><input type="text" name="image" placeholder="Set Price"></td>
+            <td><input type="text" name="image" placeholder="link image"></td>
         </tr>
         <tr>
             <td style="text-align: center" colspan="2">
@@ -36,5 +36,6 @@
     </table>
 </form>
 <h3><a href="/products?command=create">Back to create product</a></h3>
+<h3><a href="/products">Back to product</a></h3>
 </body>
 </html>
