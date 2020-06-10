@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
   User: daoxu
@@ -36,7 +37,16 @@
         </tr>
         <tr>
             <th>Line</th>
-            <td><input type="text" name="productline" placeholder="Set Product Line"></td>
+            <td>
+                <select name="" id="">
+                    <c:forEach var="productLines" items="${productLines}">
+                        <option value="${productLines.getProductLine()}">
+                            <c:out value="${productLines.getProductLine()}"/>
+                        </option>
+                    </c:forEach>
+                </select>
+            </td>
+<%--            <td><input type="text" name="productline" placeholder="Set Product Line"></td>--%>
         </tr>
         <tr>
             <th>Vendor</th>

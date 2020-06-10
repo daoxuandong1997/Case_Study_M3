@@ -47,27 +47,27 @@ public class ProductDao implements IDAO<Product> {
         return products;
     }
 
-    public ProductLine getProductLine(String productline){
+    public List<ProductLine> getProductLine(){
 
-        String sql = "SELECT * FROM productlines WHERE productline = ?";
-        ProductLine productLine = null;
+        String sql = "SELECT productline FROM productlines";
+        List<ProductLine> productLines = new ArrayList<>();
         try{
-            PreparedStatement ps = this.connection.getConnection().prepareStatement(sql);
-            ps.setString(1,productline);
-            ResultSet rs = ps.executeQuery();
+            Statement statement = this.connection.getConnection().createStatement();
+            ResultSet rs = statement.executeQuery(sql);
 
 
             while (rs.next()){
                 String product_line = rs.getString("productline");
-                String description = rs.getString("description");
-                String image = rs.getString("image");
 
-                productLine = new ProductLine(product_line,description,image);
+                ProductLine productLine = new ProductLine(product_line);
+
+                productLines.add(productLine);
             }
+
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
-        return productLine;
+        return productLines;
     }
 
     @Override

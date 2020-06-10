@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 @WebServlet(name = "ProductController", urlPatterns = "/products")
@@ -176,8 +177,7 @@ public class ProductController extends HttpServlet {
     }
 
     private void showProductLine(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String product_line = request.getParameter("productline");
-        ProductLine productLine = this.productDao.getProductLine(product_line);
+            List<ProductLine> productLine = this.productDao.getProductLine();
            request.setAttribute("productLine", productLine);
            RequestDispatcher dispatcher = request.getRequestDispatcher("Products/product_lines.jsp");
 
@@ -215,6 +215,9 @@ public class ProductController extends HttpServlet {
     }
 
     private void showCreateForm(HttpServletRequest request, HttpServletResponse response) {
+        List<ProductLine> productLines = this.productDao.getProductLine();
+
+        request.setAttribute("productLines", productLines);
         RequestDispatcher requestDispatcher = request.getRequestDispatcher("Products/create_list.jsp");
         try {
             requestDispatcher.forward(request,response);
