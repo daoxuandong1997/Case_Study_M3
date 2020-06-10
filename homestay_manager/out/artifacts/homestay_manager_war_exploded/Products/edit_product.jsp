@@ -37,10 +37,11 @@
         <tr>
             <th>Line</th>
             <td>
-
-                <select name="productline" id="line">
-                    <c:forEach items="${requestScope[""]}" var="product"">
-                        <option value="product.getProductLine()}">${requestScope["product"].getProductLine()}</option>
+                <select name="productline" id="">
+                    <c:forEach var="productLines" items="${productLines}">
+                        <option value="${productLines.getProductLine()}">
+                            <c:out value="${productLines.getProductLine()}"/>
+                        </option>
                     </c:forEach>
                 </select>
             </td>

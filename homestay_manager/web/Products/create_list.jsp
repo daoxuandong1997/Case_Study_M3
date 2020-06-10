@@ -25,7 +25,7 @@
     <table>
         <tr>
             <th>ID</th>
-            <td><input type="text" name="productcode" placeholder="Set Code"></td>
+            <td><input type="number" name="productcode" placeholder="Set Code"></td>
         </tr>
         <tr>
             <th>Name</th>
@@ -38,7 +38,7 @@
         <tr>
             <th>Line</th>
             <td>
-                <select name="" id="">
+                <select name="productline" id="">
                     <c:forEach var="productLines" items="${productLines}">
                         <option value="${productLines.getProductLine()}">
                             <c:out value="${productLines.getProductLine()}"/>

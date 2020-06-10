@@ -47,6 +47,29 @@ public class ProductDao implements IDAO<Product> {
         return products;
     }
 
+    public ProductLine getInforLine(String product_line){
+
+        String sql = "SELECT * FROM productLines WHERE productline = ?";
+        ProductLine productLine = null;
+        try {
+            PreparedStatement ps = this.connection.getConnection().prepareStatement(sql);
+            ps.setString(1,product_line);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()){
+                String line = rs.getString("productline");
+                String description = rs.getString("description");
+                String image = rs.getString("image");
+
+                productLine = new ProductLine(line,description,image);
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+
+        return productLine;
+
+    }
+
     public List<ProductLine> getProductLine(){
 
         String sql = "SELECT productline FROM productlines";

@@ -25,14 +25,12 @@
         <th>Image</th>
     </tr>
 <%--    <c:forEach items='${requestScope["product"]}' var="product">--%>
-    <c:forEach items='${product}' var="product">
         <tr>
-            <td>${product.getProductLine()}</td>
-            <td>${product.getDescription()}</td>
-            <td>${product.getImage()}</td>
+            <td>${productLine.getProductLine()}</td>
+            <td>${productLine.getDescription()}</td>
+            <td>${productLine.getImage()}</td>
 <%--            <td><a href="/products?command=edit}"><button>Edit</button></a></td>--%>
         </tr>
-    </c:forEach>
 
 </table>
 </body>

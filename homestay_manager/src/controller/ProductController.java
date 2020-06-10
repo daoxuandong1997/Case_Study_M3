@@ -89,6 +89,10 @@ public class ProductController extends HttpServlet {
         String productvendor = request.getParameter("productvendor");
         int quantity = Integer.parseInt(request.getParameter("quantity"));
 
+        List<ProductLine> productLines = this.productDao.getProductLine();
+
+        request.setAttribute("productLines", productLines);
+
         Product product = this.productDao.findById(id);
         RequestDispatcher dispatcher;
         if (product == null){
@@ -121,6 +125,10 @@ public class ProductController extends HttpServlet {
         String productline = request.getParameter("productline");
         String productvendor = request.getParameter("productvendor");
         int quantity = Integer.parseInt(request.getParameter("quantity"));
+
+        List<ProductLine> productLines = this.productDao.getProductLine();
+
+        request.setAttribute("productLines", productLines);
 
         Product product = new Product();
         product.setProductCode(id);
@@ -177,7 +185,8 @@ public class ProductController extends HttpServlet {
     }
 
     private void showProductLine(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-            List<ProductLine> productLine = this.productDao.getProductLine();
+            String product_line = request.getParameter("productline");
+            ProductLine productLine = this.productDao.getInforLine(product_line);
            request.setAttribute("productLine", productLine);
            RequestDispatcher dispatcher = request.getRequestDispatcher("Products/product_lines.jsp");
 
@@ -200,6 +209,8 @@ public class ProductController extends HttpServlet {
     private void showEditForm(HttpServletRequest request, HttpServletResponse response) {
         int id = Integer.parseInt(request.getParameter("id"));
         Product product = this.productDao.findById(id);
+        List<ProductLine> productLines = this.productDao.getProductLine();
+        request.setAttribute("productLines", productLines);
         RequestDispatcher dispatcher;
         if (product == null){
             dispatcher = request.getRequestDispatcher("error-404.jsp");
