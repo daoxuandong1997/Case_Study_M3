@@ -37,7 +37,8 @@
             <td>${product.getProductName()}</td>
             <td>${product.getPrice()}</td>
             <td>${product.getProductVendor()}</td>
-            <td>${product.getProductLine()}</td>
+<%--            <td><a href="/products?command=lines">${product.getProductLine()}</a></td>--%>
+            <td><a href="/products?productline=BR2">${product.getProductLine()}</a></td>
             <td>${product.getQuantity()}</td>
             <td><a href="/products?command=edit&id=${product.getProductCode()}"><button>Edit</button></a></td>
         </tr>

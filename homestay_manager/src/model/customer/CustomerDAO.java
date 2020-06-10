@@ -1,4 +1,6 @@
-package model;
+package model.customer;
+
+import model.IDAO;
 
 import java.util.List;
 

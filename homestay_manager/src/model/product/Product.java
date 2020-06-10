@@ -1,4 +1,4 @@
-package model;
+package model.product;
 
 public class Product {
     private int productCode;
@@ -7,18 +7,12 @@ public class Product {
     private int quantity;
     private String productLine;
     private String productVendor;
-    private String description;
-    private String image;
+
 
     public Product() {
 
     }
 
-    public Product(String productLine, String description, String image) {
-        this.productLine = productLine;
-        this.description = description;
-        this.image = image;
-    }
 
     public Product(int productCode, String productName, float price, int quantity, String productLine, String productVendor) {
         this.productCode = productCode;
@@ -29,21 +23,7 @@ public class Product {
         this.productVendor = productVendor;
     }
 
-    public String getDescription() {
-        return description;
-    }
 
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public String getImage() {
-        return image;
-    }
-
-    public void setImage(String image) {
-        this.image = image;
-    }
 
     public int getProductCode() {
         return productCode;

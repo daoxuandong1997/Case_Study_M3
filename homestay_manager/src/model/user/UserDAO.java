@@ -1,4 +1,7 @@
-package model;
+package model.user;
+
+import model.IDAO;
+import model.user.User;
 
 import java.util.List;
 

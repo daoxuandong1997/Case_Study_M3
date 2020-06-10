@@ -13,7 +13,7 @@
   </head>
   <body>
   <h1> Chào mừng bạn đến với Luxstay version ăn cắp (1.0)</h1>
-  <form action="/productlist" method="post">
+  <form action="/products" method="post">
       <button type="submit"> Chuyển hướng đến trang sản phẩm</button>
   </form>
   </body>
