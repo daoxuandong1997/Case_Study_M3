@@ -18,6 +18,7 @@
 <body>
 <div class="container">
 <form action="/login" method="post" >
+    <table border="1px">
     <div class="form-group">
         <label>UserName</label>
         <input type="text" name="username" class="form-control">
@@ -32,6 +33,7 @@
         <label class="form-check-label" for="exampleCheck1">Check me out</label>
     </div>
     <button type="submit" class="btn btn-primary">Submit</button>
+    </table>
 </form>
     <h2>${requestScope["message"]}</h2>
 </div>

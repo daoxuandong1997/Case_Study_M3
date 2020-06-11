@@ -57,11 +57,11 @@
         </tr>
         <tr>
             <td style="text-align: center" colspan="2">
-                <button type="submit">Update product</button>
+                <button type="submit">Cập Nhật</button>
             </td>
         </tr>
     </table>
 </form>
-<h3><a href="/products">Back to product list</a></h3>
+<h3><a href="/products">Quay lại trang quản lý danh sách phòng</a></h3>
 </body>
 </html>

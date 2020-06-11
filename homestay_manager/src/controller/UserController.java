@@ -35,6 +35,7 @@ public class UserController extends HttpServlet {
             session.setAttribute("IS_LOGGINED", true);
             session.setAttribute("ROLE", user.getRole());
 
+
             response.sendRedirect("/products");
         }else {
 

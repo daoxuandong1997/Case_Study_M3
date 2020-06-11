@@ -2,7 +2,7 @@ package controller;
 
 import model.product.Product;
 import model.product.ProductDao;
-import model.product.ProductLine;
+import model.product.productline.ProductLine;
 import utils.DBConnection;
 
 import javax.servlet.RequestDispatcher;
@@ -11,8 +11,8 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.DataInput;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 @WebServlet(name = "ProductController", urlPatterns = "/products")
@@ -40,37 +40,13 @@ public class ProductController extends HttpServlet {
             case "edit":
                 updateProduct(request,response);
                 break;
-            case "create_line":
-                createProductLine(request,response);
-                break;
-            case "editLine":
-                updateProductLine(request,response);
+            case "delete":
+                deleteProductById(request,response);
                 break;
             default:
                 getList(request,response);
                 break;
         }
-    }
-
-    private void updateProductLine(HttpServletRequest request, HttpServletResponse response) {
-        String product_line = request.getParameter("productline");
-        String description = request.getParameter("description");
-        String image = request.getParameter("image");
-
-        ProductLine productLine = new ProductLine(product_line,description,image);
-
-        this.productDao.updateProductLine(productLine);
-        RequestDispatcher dispatcher = request.getRequestDispatcher("Products/edit_product_line.jsp");
-        request.setAttribute("mess","Productline was updated");
-
-        try{
-            dispatcher.forward(request,response);
-        } catch (ServletException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
     }
 
     private void deleteProductById(HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -81,27 +57,6 @@ public class ProductController extends HttpServlet {
         }catch (Exception e) {
             response.getWriter().write("Loi khi xoa san pham co id la: " + id);
         }
-    }
-
-    private void createProductLine(HttpServletRequest request, HttpServletResponse response) {
-        String product_line = request.getParameter("line");
-        String description = request.getParameter("description");
-        String image = request.getParameter("image");
-
-        ProductLine productLine = new ProductLine(product_line,description,image);
-
-        productDao.saveProductLine(productLine);
-
-        RequestDispatcher dispatcher = request.getRequestDispatcher("Products/create_lines.jsp");
-        request.setAttribute("mess","A new product line was created");
-        try {
-            dispatcher.forward(request,response);
-        } catch (ServletException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
     }
 
     private void getList(HttpServletRequest request, HttpServletResponse response) {
@@ -174,7 +129,7 @@ public class ProductController extends HttpServlet {
 
         productDao.save(product);
 
-        RequestDispatcher dispatcher = request.getRequestDispatcher("Products/create_list.jsp");
+        RequestDispatcher dispatcher = request.getRequestDispatcher("Products/create_product.jsp");
         request.setAttribute("mess","A new product was created");
         try {
             dispatcher.forward(request,response);
@@ -204,23 +159,8 @@ public class ProductController extends HttpServlet {
             case "edit":
                 showEditForm(request,response);
                 break;
-            case "create_lines":
-                showCreateLinesForm(request,response);
-                break;
-            case"lines":
-                showProductLine(request,response);
-                break;
             case "delete":
-                deleteProductById(request,response);
-                break;
-            case "showLines":
-                showAllProductLines(request,response);
-                break;
-            case "editLine":
-                showEditProductLine(request,response);
-                break;
-            case "deleteLine":
-                deleteProductLine(request,response);
+                showDeleteForm(request,response);
                 break;
             default:
                 getList(request,response);
@@ -230,54 +170,15 @@ public class ProductController extends HttpServlet {
 
     }
 
-    private void deleteProductLine(HttpServletRequest request, HttpServletResponse response) {
-        String productLine = request.getParameter("productline");
+    private void showDeleteForm(HttpServletRequest request, HttpServletResponse response) {
+        int id = Integer.parseInt(request.getParameter("id"));
+        RequestDispatcher requestDispatcher = request.getRequestDispatcher("Products/delete_product.jsp");
+        request.setAttribute("id",id);
         try{
-            this.productDao.deleteByProductLine(productLine);
-            showAllProductLines(request,response);
-        }catch (Exception e){
-            e.getStackTrace();
-        }
-    }
-
-    private void showEditProductLine(HttpServletRequest request, HttpServletResponse response) {
-        String product_line = request.getParameter("productline");
-        ProductLine productLine = this.productDao.findByProductLine(product_line);
-        RequestDispatcher dispatcher;
-        if (productLine == null){
-            dispatcher = request.getRequestDispatcher("error-404.jsp");
-        }else {
-            request.setAttribute("productline",productLine);
-            dispatcher = request.getRequestDispatcher("Products/edit_product_line.jsp");
-        }
-        try {
-            dispatcher.forward(request,response);
+            requestDispatcher.forward(request,response);
         } catch (ServletException e) {
             e.printStackTrace();
         } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-    }
-
-    private void showProductLine(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-            String product_line = request.getParameter("productline");
-            ProductLine productLine = this.productDao.getInforLine(product_line);
-           request.setAttribute("productLine", productLine);
-           RequestDispatcher dispatcher = request.getRequestDispatcher("Products/product_lines.jsp");
-
-        try {
-            dispatcher.forward(request,response);
-        } catch (ServletException | IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    private void showCreateLinesForm(HttpServletRequest request, HttpServletResponse response) {
-        RequestDispatcher requestDispatcher = request.getRequestDispatcher("Products/create_lines.jsp");
-        try {
-            requestDispatcher.forward(request,response);
-        } catch (ServletException | IOException e) {
             e.printStackTrace();
         }
     }
@@ -305,7 +206,7 @@ public class ProductController extends HttpServlet {
         List<ProductLine> productLines = this.productDao.getProductLine();
 
         request.setAttribute("productLines", productLines);
-        RequestDispatcher requestDispatcher = request.getRequestDispatcher("Products/create_list.jsp");
+        RequestDispatcher requestDispatcher = request.getRequestDispatcher("Products/create_product.jsp");
         try {
             requestDispatcher.forward(request,response);
         } catch (ServletException | IOException e) {
@@ -313,18 +214,18 @@ public class ProductController extends HttpServlet {
         }
     }
 
-    private void showAllProductLines(HttpServletRequest request, HttpServletResponse response){
-        List<ProductLine> productLines = this.productDao.getAllListLine();
-        request.setAttribute("listLine",productLines);
-        RequestDispatcher dispatcher = request.getRequestDispatcher("Products/ShowAllProductLines.jsp");
-
-        try{
-            dispatcher.forward(request,response);
-        } catch (ServletException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
+//    private void getProducts(HttpServletRequest request, HttpServletResponse response){
+//        List<ProductLine> productLines = this.productDao.getAllListLine();
+//        request.setAttribute("listLine",productLines);
+//        RequestDispatcher dispatcher = request.getRequestDispatcher("home.jsp");
+//
+//        try{
+//            dispatcher.forward(request,response);
+//        } catch (ServletException e) {
+//            e.printStackTrace();
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//    }
 
 }

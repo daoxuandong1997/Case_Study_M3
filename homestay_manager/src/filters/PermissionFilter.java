@@ -28,9 +28,12 @@ public class PermissionFilter implements Filter {
             if (role == ROLE_ADMIN) {
                 chain.doFilter(req, resp);
             } else {
-                PrintWriter writer = resp.getWriter();
-                writer.write("Khong co quyen thuc hien thao tac nay!");
+//                PrintWriter writer = resp.getWriter();
+//                writer.write("Khong co quyen thuc hien thao tac nay!");
+                response.sendRedirect("/login");
             }
+        }else if(o==null){
+            response.sendRedirect("/login");
         }
     }
 
